@@ -10,27 +10,33 @@ import generateToken from "../utils/generateToken.js";
       if(userExists){
         res.status(400).json({message:'user already exists'})
       }
+
+      else{
+        const user  = users.create({   
+          name,email,password,address,phone,
+      })
+  
+      if(user){
+          res.status(201).json({  
+              _id:user._id,
+              name:user.name,
+              email:user.email, 
+              password:user.password,
+              phone:user.phone,
+              address:user.address,
+              token:generateToken(user._id)
+          })
+        
+      }
+      else{
+        res.status(401).json({message:'invalid User Data'});
+    } 
     
 
 
-    const user  = users.create({   
-        name,email,password,address,phone,
-    })
-
-    if(user){
-        res.status(201).json({  
-            _id:user._id,
-            name:user.name,
-            email:user.email, 
-            password:user.password,
-            phone:user.phone,
-            address:user.address,
-            token:generateToken(user._id)
-        })
+   
     }
-else{
-    res.status(401).json({message:'invalid User Data'});
-}
+
   }
 
   export const login = async( req, res)=>{
