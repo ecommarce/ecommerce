@@ -1,3 +1,4 @@
+import Users from "../models/userModes.js";
 import users from "../models/userModes.js";
 import generateToken from "../utils/generateToken.js";
 
@@ -6,7 +7,7 @@ import generateToken from "../utils/generateToken.js";
   export const register = async(req , res)=>{
     const{name,email,password,address,phone,}= req.body;
     
-      const userExists =await users.findOne({email})
+      const userExists =await Users.findOne({email})
       if(userExists){
         res.status(400).json({message:'user already exists'})
       }
